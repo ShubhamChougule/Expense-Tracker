@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: et-bff-service
+
+server:
+  port: 8085
+
+services:
+  et-uas:
+    name: et-user-auth-service
+    url : http://localhost:8081/api
+
+  et-es:
+    name: et-expense-service
+    url: http://localhost:8082/api
+
+  et-rs:
+    name: et-reports-service
+    url: http://localhost:8083/api
+    

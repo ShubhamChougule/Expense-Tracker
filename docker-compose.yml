@@ -1,0 +1,58 @@
+.version : '3.8'
+services:
+  et-uas-db:
+    image: uas-db
+    container_name: et-uas-db
+    ports:
+      - "27018:27017"
+    networks:
+      - backend
+
+  et-uas:
+    image: uas
+    container_name: et-uas
+    ports:
+      - "8081:8081"
+    depends_on:
+      - et-uas-db
+    networks:
+      - backend
+
+  et-es-db:
+    image: es-db
+    container_name: et-es-db
+    ports:
+      - "27019:27017"
+    networks:
+      - backend
+
+  et-es:
+    image: es
+    container_name: et-es
+    ports:
+      - "8082:8082"
+    depends_on:
+      - et-es-db
+    networks:
+      - backend
+
+  et-rs:
+    image: rs
+    container_name: et-rs
+    ports:
+      - "8083:8083"
+    networks:
+      - backend
+
+  et-bff:
+    image: et-bff
+    container_name: et-bff
+    ports:
+      - "8085:8085"
+    networks:
+      - backend
+
+networks:
+  backend:
+    name : backend
+    driver: bridge

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: et-user-auth-service
+
+  data:
+    mongodb:
+      uri: mongodb://et-uas-db:27017/
+      database: user-auth
+
+server:
+  port: 8081
+
+

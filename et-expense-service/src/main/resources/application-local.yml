@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: et-user-auth-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/
+      database: exp-cat
+
+server:
+  port: 8082
+
+

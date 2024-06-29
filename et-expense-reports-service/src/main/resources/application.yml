@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: et-reports-service
+
+server:
+  port: 8083
