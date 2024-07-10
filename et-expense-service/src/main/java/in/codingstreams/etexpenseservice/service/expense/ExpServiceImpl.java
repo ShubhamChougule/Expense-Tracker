@@ -72,7 +72,6 @@ public class ExpServiceImpl implements ExpService {
         return expense;
     }
 
-    @Override
     public Page<Expense> listExpByUserId(String userId, Pageable pageable, String startDate, String endDate) {
         String methodName = "ExpServiceImpl:listExpByUserId";
         log.info(LoggingConstants.START_METHOD_LOG, methodName, userId);
@@ -81,13 +80,12 @@ public class ExpServiceImpl implements ExpService {
 
         if(startDate != null && endDate != null) {
             var dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            expenses = expRepo.findAllByUserIdAndCreatedAtBetween(userId,
+            expenses = expRepo.findAllByUserIdAndCreatedAtBetweenOrderByCreatedAtDesc(userId,
                     LocalDate.parse(startDate, dateTimeFormat).atStartOfDay(),
                     LocalDate.parse(endDate, dateTimeFormat).plusDays(1).atStartOfDay(), pageable);
         } else {
-            expenses = expRepo.findAllByUserId(userId, pageable);
+            expenses = expRepo.findAllByUserIdOrderByCreatedAtDesc(userId, pageable);
         }
-
 
         log.info(LoggingConstants.END_METHOD_LOG, methodName, userId);
 

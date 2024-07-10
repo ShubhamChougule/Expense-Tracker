@@ -1,17 +1,37 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import ExpenseTracker from "./components/ExpenseTracker";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import NavBar from "./components/NavBar";
+import Dashboard from "./pages/Dashboard";
+import AllExpenses from "./pages/AllExpenses";
 
 const App = () => {
+  const location = useLocation();
+  const hideNavBarPaths = ["/login", "/register"];
+
   return (
-    <Router>
+    <div>
+      {!hideNavBarPaths.includes(location.pathname) && <NavBar />}
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/expense-tracker" element={<ExpenseTracker />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/allexpenses" element={<AllExpenses />} />
       </Routes>
-    </Router>
+    </div>
   );
 };
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;

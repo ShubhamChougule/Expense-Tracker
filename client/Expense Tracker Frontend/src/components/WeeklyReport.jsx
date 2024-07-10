@@ -75,8 +75,10 @@ const WeeklyReport = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Weekly Expenses Report</h2>
+    <div className="bg-white p-6 flex flex-col justify-center  rounded-lg shadow-lg w-full max-w-3xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4 text-blue-900">
+        Weekly Expenses Report
+      </h2>
       <div className="h-[200px]">
         <Bar data={chartData} options={{ maintainAspectRatio: false }} />
       </div>

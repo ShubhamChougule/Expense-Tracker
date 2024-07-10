@@ -14,9 +14,13 @@ public interface ExpRepo extends MongoRepository<Expense, String> {
 
     Optional<Expense> findByExpIdAndUserId(String expId, String userId);
 
-    Page<Expense> findAllByUserId(String userId, Pageable pageable);
-
-    Page<Expense> findAllByUserIdAndCreatedAtBetween(String userId, LocalDateTime localDateTime, LocalDateTime localDateTime1, Pageable pageable);
+//    Page<Expense> findAllByUserId(String userId, Pageable pageable);
+//
+//    Page<Expense> findAllByUserIdAndCreatedAtBetween(String userId, LocalDateTime localDateTime, LocalDateTime localDateTime1, Pageable pageable);
 
     void deleteByExpIdAndUserId(String expId, String userId);
+
+    Page<Expense> findAllByUserIdAndCreatedAtBetweenOrderByCreatedAtDesc(String userId, LocalDateTime localDateTime, LocalDateTime localDateTime1, Pageable pageable);
+
+    Page<Expense> findAllByUserIdOrderByCreatedAtDesc(String userId, Pageable pageable);
 }

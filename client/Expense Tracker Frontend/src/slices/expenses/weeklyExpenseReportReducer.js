@@ -3,7 +3,16 @@ import { getWeeklyExpensesReport } from "../../utils/Api";
 
 const initialState = {
   status: "ideal",
-  data: ["empty"],
+  data: {
+    weeklyReport: {
+      totalExpenseByDate: {
+        "06-Jul-2024": 2000,
+        "05-Jul-2024": 255,
+        "07-Jul-2024": 3435,
+      },
+      totalExpenses: 5690,
+    },
+  },
 };
 
 export const fetchWeeklyChart = createAsyncThunk("weeklyReport", async () => {

@@ -3,12 +3,18 @@ import { getMonthlyExpensesReport } from "../../utils/Api";
 
 const initialState = {
   status: "ideal",
-  data: ["empty"],
+  data: {
+    totalExpenseByExpCat: {
+      recharges: 3182,
+      travel: 3400,
+      food: 413,
+    },
+    totalExpenses: 6995,
+  },
 };
 
 export const fetchMonthlyChart = createAsyncThunk("monthlyReport", async () => {
   const response = await getMonthlyExpensesReport();
-  console.log(response);
   return response;
 });
 

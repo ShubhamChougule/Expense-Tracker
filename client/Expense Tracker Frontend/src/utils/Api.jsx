@@ -1,7 +1,12 @@
 import axios from "axios";
 
 // access token
-const accessToken = localStorage.getItem("accessToken");
+let accessToken = localStorage.getItem("accessToken");
+
+export const loadAccessToken = async () => {
+  accessToken = localStorage.getItem("accessToken");
+};
+
 const config = {
   headers: { Authorization: `Bearer ${accessToken}` },
 };
@@ -37,12 +42,9 @@ export const addCategory = async (newCategory) => {
       { name: newCategory },
       config
     );
-    if (response.status === 201) {
-      alert("Category added successfully!");
-    }
     return response;
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };
 
@@ -60,30 +62,98 @@ export const getWeeklyExpensesReport = async () => {
 };
 
 export const getMonthlyExpensesReport = async () => {
+  const d = new Date();
+  d.setDate(d.getDate() - 30);
+  let startDate = String(d.toLocaleDateString("en-GB")).replaceAll("/", "-");
+  let api =
+    "http://localhost:8085/api/v1/reports/monthly-report?startDate=" +
+    startDate;
   try {
     const response = await axios.post(
-      "http://localhost:8085/api/v1/reports/monthly-report?startDate=01-06-2024",
+      api,
       {}, // Assuming an empty body is required
       config
     );
-
-    
-    console.log("data --", response);
     return response.data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const fetchExpenses = async () => {
+export const fetchExpenses = async (startDate, endDate, page = 0, size = 5) => {
+  try {
+    let api = "http://localhost:8085/api/v1/expenses?";
+    api += `size=${size}&page=${page}`;
+
+    // Conditionally add startDate and endDate to the query string
+    if (startDate) {
+      api += `&startDate=${startDate}`;
+    }
+    if (endDate) {
+      api += `&endDate=${endDate}`;
+    }
+
+    api += `&sort=createdAt,DESC`;
+
+    console.log(api);
+
+    const response = await axios.get(api, config);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    // Handle error as needed
+    throw error;
+  }
+};
+
+export const fetchUserInformation = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:8085/api/v1/expenses",
+      "http://localhost:8085/api/v1/users/info",
       config
     );
 
-    return response.data.expenses;
+    return response.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const deleteExpense = async (expenseId) => {
+  try {
+    const response = await axios.delete(
+      "http://localhost:8085/api/v1/expenses/" + expenseId,
+      config
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateExpense = async (expenseId, formData) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:8085/api/v1/expenses/" + expenseId,
+      formData,
+      config
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const registerUser = async (formData) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8085/api/v1/sign-up",
+      formData
+    );
+    return response;
+  } catch (error) {
+    return error;
   }
 };
